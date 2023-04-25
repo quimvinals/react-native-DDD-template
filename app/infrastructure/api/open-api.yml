@@ -1,0 +1,571 @@
+swagger: '2.0'
+info:
+  description: >-
+    Route task manager
+  title: Route Task Manager
+  version: ${version}
+
+basePath: /api/v1/route-tasks-manager
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+
+paths:
+  /health:
+    get:
+      description: It returns health status of the service.
+      responses:
+        '200':
+          description: Ok
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+              error:
+                $ref: '#/definitions/error'
+        '500':
+          description: Internal server error
+          schema:
+            properties:
+              data:
+                type: object
+              error:
+                $ref: '#/definitions/error'
+            type: object
+      deprecated: false
+  /drivers/{id}/credentials: 
+    get:
+      description: It returns the driver credentals for the service specified in the type parameter
+      parameters:
+        - in: header
+          name: X-Forwarded-Authorization
+          type: string
+          required: true
+          description: the forwarded auth0 token that includes the driver ID 
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: the driver id
+        - in: query
+          name: type
+          type: string
+          enum: 
+            - firebase
+          required: true
+          description: the name of the service to generate the key for
+      responses: 
+        '200': 
+          description: Ok
+          schema:
+            type: object 
+            properties:
+              data:
+                type: object
+                properties:
+                  accessToken: 
+                    type: string
+              error:
+                $ref: '#/definitions/error'
+        '404':
+          description: Driver not found
+          schema:
+            type: object 
+            properties:
+              data:
+                type: object
+              error:
+                $ref: '#/definitions/error'
+        '500':
+          description: Internal server error
+          schema:
+            type: object 
+            properties:
+              data:
+                type: object
+              error:
+                $ref: '#/definitions/error'
+  /actions/batch:
+    post:
+      description: It allows driver, fleet manager, traffic controller and admin to submit actions related to route
+      parameters:
+        - in: body
+          name: actions
+          description: The action sent by the user.
+          schema:
+            type: array
+            items: 
+              $ref: '#/definitions/actionCreationRequest'
+      responses:
+        207:
+          description: Actions submitted
+          schema:
+            type: object 
+            properties:
+              data:
+                type: object
+                $ref: '#/definitions/actionCreationBatchResponse'
+              error:
+                type: object
+            
+        '500':
+          description: Internal server error
+          schema:
+            type: object 
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/error'
+                  type: object
+  /events/route-plan-changed:
+    post:
+      description: It process lmo.v1.route.changed event.
+      parameters:
+        - in: body
+          name: PubSubMessageRequest
+          description: The base64 encoded value in data field is 'RoutePlanChangedPayload'
+          schema: 
+            type: object
+            $ref: '#/definitions/PubSubMessageRequest'
+      responses:
+        '204':
+          description: Ok
+          schema:
+            properties:
+              data:
+                type: object
+              error:
+                $ref: '#/definitions/error'
+                type: object
+            type: object
+        '200':
+          description: Internal server error
+          schema:
+            properties:
+              data:
+                type: object
+              error:
+                $ref: '#/definitions/error'
+                type: object
+            type: object
+      deprecated: false
+definitions:
+  actionCreationRequest:
+    type: object
+    required:
+      - orderId
+      - type
+      - executedAt
+    properties:
+      orderId:
+        type: string
+        description: The order entity associated with di action is contained in
+      routeId:
+        type: string
+        description: The route the entity associated with di action is contained in  
+      taskId:
+        type: string
+        description: The task ID the action is related to. Mandatory if stop_id is null 
+      stopId: 
+        type: string
+        description: The stop ID the action is related to. Mandatory if task_id is null
+      target: 
+        type: string
+        enum:
+          - warehouse
+          - customer
+          - thirdParty
+      taskType:
+        type: string
+        description: Type of the task
+        enum:
+          - pickup
+          - delivery
+      type:
+        type: string
+        description: Type of the action
+        enum:
+        - checkinStop
+        - checkinStopSkipGeofence
+        - closeStop
+        - parcelDelivered
+        - parcelPickedup
+        - parcelReturned
+        - parcelDeliveryFailed
+        - parcelPickedupFailed
+        - parcelReturnedFailed
+      executedAt:
+        description: RFC-3339 format time of the action.
+        type: string
+        format: date-time
+      extraInfo:
+        description: Extra information that may be needed depending on the action.
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/extraInfo'
+      location:
+        type: object
+        description: Location from where the action was sent
+        properties:
+          latitude:
+            type: number
+          longitude:
+            type: number
+        required:
+        - latitude
+        - longitude
+      executedSteps:
+        description: All the steps necessary to fulfill taskID
+        type: array
+        items: 
+          type: object
+          properties:
+            data:
+              type: array
+              items: 
+                type: string
+            type:
+              type: string
+              enum:
+              - otp
+              - photo
+              - barcodes
+              - documentId
+              - documentIdPhotos
+              - signature
+              - cashOnDelivery
+  actionCreationResponse:
+    properties:
+      status:
+        type: integer
+        description: status of the current execution
+      request:
+        $ref: '#/definitions/actionCreationRequest'
+      data:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+            description: Id of the submitted action
+      error:
+        $ref: '#/definitions/error'
+  actionCreationBatchResponse:
+    properties:
+      result:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/actionCreationResponse'
+      error:
+        $ref: '#/definitions/error'
+  routePlan:
+    type: object
+    properties: 
+      id:
+        type: string
+        format: uuid
+      driver_id: 
+        type: string
+        format: uuid
+      day_of_execution:
+        type: string
+        format: date
+      order_ids:
+        type: array
+        items:
+          type: string
+          format: uuid
+      stops: 
+        type: array
+        items: 
+          type: object 
+          $ref: '#/definitions/stop'
+      updated_at:
+        type: string
+        format: date-time
+      expire_at:
+        type: string
+        format: date-time
+  stop:
+    type: object
+    properties:
+      stop_id: 
+        type: string
+        format: uuid
+      location: 
+        type: object
+        $ref: '#/definitions/location'
+      tasks: 
+        type: array
+        items: 
+          type: object 
+          $ref: '#/definitions/task'
+  task: 
+    type: object
+    properties:
+      task_id: 
+        type: string
+        format: uuid
+      delivered:
+        type: boolean
+      type: 
+        type: string
+        enum: 
+          - delivery
+          - pickup
+      order:
+        type: object
+        $ref: '#/definitions/dispatchDetail'
+      status:
+        type: string
+        enum:
+          - closed
+          - failed
+          - open
+      instructions:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/instruction'
+      executed_at:
+        type: string
+        format: date-time
+      extra_info:
+        type: object
+        $ref: "#/definitions/extraInfo"
+  retailerDeliveryInstructions:
+    type: object
+    properties:
+      retailer_id:
+        type: string
+        format: uuid
+      configurations:
+        type: object
+        $ref: "#/definitions/instruction"
+  dispatchDetail:
+    type: object
+    properties:
+      order_id: 
+        type: string
+        format: uuid
+      order_model:
+        type: string
+        enum:
+          - store_model
+          - warehouse_model
+      order_number:
+        type: string
+      another_information:
+        type: string
+      cod_currency:
+        type: string
+      cod_amount:
+        type: number
+      expected_delivery_ts:
+        type: object
+        $ref: "#/definitions/timeslot"
+      expected_pickup_ts:
+        type: object
+        $ref: "#/definitions/timeslot"
+      retailer_details:
+        type: object
+        $ref: "#/definitions/retailer"
+      sales_order_number:
+        type: string
+      updated_at:
+        type: string
+        format: date-time
+      expire_at:
+        type: string
+        format: date-time
+      order_type:
+        type: string
+        enum:
+          - direct
+          - reverse
+          - b2b
+          - collaborative
+      customer_details:
+        type: object
+        $ref: '#/definitions/customer'
+      packages: 
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/parcel'
+  retailer:
+    type: object
+    properties:
+      name:
+        type: string
+      id: 
+        type: string
+        format: uuid
+  timeslot:
+    type: object
+    properties:
+      start:
+        type: string
+        format: date-time
+      end:
+        type: string
+        format: date-time
+  parcel:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      barcode: 
+        type: string    
+      height:
+        type: number
+      width:
+        type: number
+      length:
+        type: number
+      volume:
+        type: number
+      updated_at:
+        type: string
+        format: date-time
+      expire_at:
+        type: string
+        format: date-time
+  instruction: 
+    type: object
+    properties:
+      model:
+        type: string
+        enum:
+        - warehouse_model
+        - store_model
+      type:
+        type: string
+        enum:
+          - pickup
+          - delivery
+      target: 
+        type: string
+        enum:
+          - warehouse
+          - customer
+          - thirdParty
+      priority:
+        type: integer
+        description: the order in which the instructions are executed
+      steps: 
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/step'
+  step:
+    type: object
+    properties:
+      name: 
+        type: string
+        enum: 
+          - photo
+          - scan
+          - manualConfirmation
+          - signature
+      mandatory: 
+        type: boolean
+      attempts:
+        type: integer
+      priority:
+        type: integer
+        description: the order in which the steps must be executed
+      fallback: 
+        type: object
+        description: if a step may be impossible to be executed a fallback step that can't fail must be provided. One level of nesting is allowed.
+        $ref: '#/definitions/stepFallback'
+  stepFallback:
+    type: object
+    properties:
+      name: 
+        type: string
+        enum: 
+          - photo
+          - scan
+          - manualConfirmation
+          - signature
+      mandatory: 
+        type: boolean
+      attempts:
+        type: integer
+      priority:
+        type: integer
+        description: the order in which the steps must be executed
+  extraInfo: 
+    type: object
+    properties:
+      key:
+        type: string
+        enum: 
+          - failReason
+          - alternativeAddress
+          - notes
+          - phoneNumber
+          - recipientName
+          - relationship
+      value:
+        type: string
+  location: 
+    type: object
+    properties:
+      latitude: 
+        type: number
+      longitude: 
+        type: number
+  address:
+    type: string
+  customer:
+    type: object
+    properties:
+      name: 
+        type: string
+      phone: 
+        type: string
+  error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int
+      message:
+        type: string
+  PubSubMessageRequest:
+    type: object
+    description: It is the payload generated by the push subscriptions in GCP. It adds metadata information to the event. The data field contains the base64 encoded json of the event.
+    properties:
+      message: 
+        type: object
+        properties:
+          attributes:
+            type: object
+            properties:
+              event_name:
+                type: string
+                enum: 
+                  - lmo.v1.route.changed
+          data: 
+            type: string
+            format: base64
+        description: data value can change depending on the event wrapped. The value is a base64 encoded json representation of one of the events defined.
+  RoutePlanChangedPayload:
+    type: object
+    properties:
+      route_id:
+        type: string
+      order_id:
+        type: string
+      action_id:
+        type: string

@@ -1,0 +1,238 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Application Layer can be created 1`] = `
+Application {
+  "controllers": Object {
+    "DriverController": DriverController {
+      "driverID": undefined,
+      "fleetEngineAccessToken": undefined,
+      "isLoggedIn": null,
+      "requestsSubjectsMap": Object {
+        "LOGIN": RequestSubject {
+          "_value": "IDLE",
+          "closed": false,
+          "currentObservers": null,
+          "hasCompleted": false,
+          "hasError": false,
+          "hasFailed": false,
+          "isStopped": false,
+          "observers": Array [
+            SafeSubscriber {
+              "_finalizers": Array [
+                Subscription {
+                  "_finalizers": null,
+                  "_parentage": [Circular],
+                  "closed": false,
+                  "initialTeardown": [Function],
+                },
+              ],
+              "_parentage": null,
+              "closed": false,
+              "destination": ConsumerObserver {
+                "partialObserver": Object {
+                  "complete": [Function],
+                  "error": [Function],
+                  "next": undefined,
+                },
+              },
+              "initialTeardown": undefined,
+              "isStopped": false,
+            },
+          ],
+          "requestID": "LOGIN",
+          "requestStatus": "IDLE",
+          "thrownError": null,
+        },
+        "LOGOUT": RequestSubject {
+          "_value": "IDLE",
+          "closed": false,
+          "currentObservers": null,
+          "hasCompleted": false,
+          "hasError": false,
+          "hasFailed": false,
+          "isStopped": false,
+          "observers": Array [
+            SafeSubscriber {
+              "_finalizers": Array [
+                Subscription {
+                  "_finalizers": null,
+                  "_parentage": [Circular],
+                  "closed": false,
+                  "initialTeardown": [Function],
+                },
+              ],
+              "_parentage": null,
+              "closed": false,
+              "destination": ConsumerObserver {
+                "partialObserver": Object {
+                  "complete": [Function],
+                  "error": [Function],
+                  "next": undefined,
+                },
+              },
+              "initialTeardown": undefined,
+              "isStopped": false,
+            },
+          ],
+          "requestID": "LOGOUT",
+          "requestStatus": "IDLE",
+          "thrownError": null,
+        },
+        "TOTAL_CASH": RequestSubject {
+          "_value": "IDLE",
+          "closed": false,
+          "currentObservers": null,
+          "hasCompleted": false,
+          "hasError": false,
+          "hasFailed": false,
+          "isStopped": false,
+          "observers": Array [
+            SafeSubscriber {
+              "_finalizers": Array [
+                Subscription {
+                  "_finalizers": null,
+                  "_parentage": [Circular],
+                  "closed": false,
+                  "initialTeardown": [Function],
+                },
+              ],
+              "_parentage": null,
+              "closed": false,
+              "destination": ConsumerObserver {
+                "partialObserver": Object {
+                  "complete": [Function],
+                  "error": [Function],
+                  "next": undefined,
+                },
+              },
+              "initialTeardown": undefined,
+              "isStopped": false,
+            },
+          ],
+          "requestID": "TOTAL_CASH",
+          "requestStatus": "IDLE",
+          "thrownError": null,
+        },
+        "USER_INFO": RequestSubject {
+          "_value": "IDLE",
+          "closed": false,
+          "currentObservers": null,
+          "hasCompleted": false,
+          "hasError": false,
+          "hasFailed": false,
+          "isStopped": false,
+          "observers": Array [
+            SafeSubscriber {
+              "_finalizers": Array [
+                Subscription {
+                  "_finalizers": null,
+                  "_parentage": [Circular],
+                  "closed": false,
+                  "initialTeardown": [Function],
+                },
+              ],
+              "_parentage": null,
+              "closed": false,
+              "destination": ConsumerObserver {
+                "partialObserver": Object {
+                  "complete": [Function],
+                  "error": [Function],
+                  "next": undefined,
+                },
+              },
+              "initialTeardown": undefined,
+              "isStopped": false,
+            },
+          ],
+          "requestID": "USER_INFO",
+          "requestStatus": "IDLE",
+          "thrownError": null,
+        },
+      },
+      "token": undefined,
+      "totalCash": undefined,
+      "userInfo": undefined,
+    },
+    "RouteController": RouteController {
+      "driverId": undefined,
+      "infrastructure": Infrastructure {
+        "api": API {
+          "axiosClient": undefined,
+          "baseURL": "https://test-api.com",
+          "token": undefined,
+        },
+        "services": Object {
+          "location": LocationService {
+            "lastKnownLocation": null,
+            "locationUpdatesSubscription": null,
+            "options": Object {},
+          },
+        },
+      },
+      "requestsSubjectsMap": Object {
+        "REQUEST_ROUTE_DOCUMENT_ID": RequestSubject {
+          "_value": "IDLE",
+          "closed": false,
+          "currentObservers": null,
+          "hasCompleted": false,
+          "hasError": false,
+          "hasFailed": false,
+          "isStopped": false,
+          "observers": Array [
+            SafeSubscriber {
+              "_finalizers": Array [
+                Subscription {
+                  "_finalizers": null,
+                  "_parentage": [Circular],
+                  "closed": false,
+                  "initialTeardown": [Function],
+                },
+              ],
+              "_parentage": null,
+              "closed": false,
+              "destination": ConsumerObserver {
+                "partialObserver": Object {
+                  "complete": [Function],
+                  "error": [Function],
+                  "next": undefined,
+                },
+              },
+              "initialTeardown": undefined,
+              "isStopped": false,
+            },
+          ],
+          "requestID": "REQUEST_ROUTE_DOCUMENT_ID",
+          "requestStatus": "IDLE",
+          "thrownError": null,
+        },
+      },
+      "route": Route {
+        "route": Array [],
+        "routeState": "FULLY_SEQUENCED",
+      },
+      "routeId": undefined,
+      "setDriverId": undefined,
+    },
+  },
+  "errorSubscription": [Function],
+  "errors": Map {},
+  "infrastructure": Infrastructure {
+    "api": API {
+      "axiosClient": undefined,
+      "baseURL": "https://test-api.com",
+      "token": undefined,
+    },
+    "services": Object {
+      "location": LocationService {
+        "lastKnownLocation": null,
+        "locationUpdatesSubscription": null,
+        "options": Object {},
+      },
+    },
+  },
+  "useCases": Object {
+    "Login": [Function],
+  },
+  "useCasesRequests": Array [],
+}
+`;

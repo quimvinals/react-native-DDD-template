@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Paack Drivers</string>
+    <!-- BEGIN app-center -->
+    <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">ASK_JAVASCRIPT</string>
+    <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ENABLE_IN_JS</string>
+    <!-- END app-center -->
+</resources>

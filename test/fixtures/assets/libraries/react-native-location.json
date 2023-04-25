@@ -1,0 +1,12 @@
+{
+  "speed": 10,
+  "latitude": 41.48391318914081,
+  "longitude": 2.1560881152317486,
+  "accuracy": 5,
+  "heading": -1,
+  "altitude": 0,
+  "altitudeAccuracy": -1,
+  "floor": 0,
+  "timestamp": 1446007304457.029,
+  "fromMockProvider": false
+}

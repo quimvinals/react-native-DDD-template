@@ -1,0 +1,13 @@
+/* 
+  InfoPlist.strings
+  pudos
+
+  Created by Nazario Mariano on 10/25/21.
+  
+*/
+
+NSCameraUsageDescription = "To allow scanning and taking photos during pick up & delivery.";
+NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to help you navigate safely and complete your tasks faster.";
+NSLocationAlwaysUsageDescription = "We need your location to help you navigate safely and complete your tasks faster.";
+NSLocationWhenInUseUsageDescription = "We need your location to help you navigate safely and complete your tasks faster.";
+NSUserTrackingUsageDescription = "We will track the usage of the app features and also report crash events to improve the user experience.";

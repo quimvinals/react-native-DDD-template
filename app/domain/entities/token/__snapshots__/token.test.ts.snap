@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Token can be created 1`] = `
+Token {
+  "accessToken": "access-token",
+  "invalid": false,
+  "refreshToken": "refresh-token",
+}
+`;

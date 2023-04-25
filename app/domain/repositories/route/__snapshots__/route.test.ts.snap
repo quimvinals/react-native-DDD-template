@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Route can be created 1`] = `
+Route {
+  "route": Array [],
+  "routeState": "FULLY_SEQUENCED",
+}
+`;
+
+exports[`Route setRoute sets the route property correctly 1`] = `
+Route {
+  "route": Array [
+    Stop {
+      "address": undefined,
+      "clientRadius": undefined,
+      "completed": undefined,
+      "geoHash": undefined,
+      "retailerRadius": undefined,
+      "sequence": undefined,
+      "stopId": "test-id",
+    },
+  ],
+  "routeState": "FULLY_SEQUENCED",
+}
+`;

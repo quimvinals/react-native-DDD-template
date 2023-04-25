@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Stop can be created 1`] = `
+Stop {
+  "address": undefined,
+  "clientRadius": undefined,
+  "completed": undefined,
+  "geoHash": undefined,
+  "retailerRadius": undefined,
+  "sequence": undefined,
+  "stopId": "test-id",
+}
+`;

@@ -1,0 +1,1 @@
+require('~/components/header/header.story');

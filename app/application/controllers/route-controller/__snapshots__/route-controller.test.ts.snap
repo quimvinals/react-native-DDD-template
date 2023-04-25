@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RouteController can be created 1`] = `
+RouteController {
+  "driverId": undefined,
+  "infrastructure": MockInfrastructure {
+    "api": MockAPI {
+      "baseURL": "test-url",
+      "error": undefined,
+      "failedTasks": Object {},
+      "returnAPIError": false,
+      "token": undefined,
+    },
+    "services": Object {
+      "location": MockLocationService {
+        "gpsEnabled": true,
+        "location": Geocode {
+          "latitude": 4,
+          "longitude": 3,
+        },
+        "locationUpdatesSubscription": undefined,
+        "setupCalled": false,
+      },
+    },
+  },
+  "requestsSubjectsMap": Object {
+    "REQUEST_ROUTE_DOCUMENT_ID": RequestSubject {
+      "_value": "IDLE",
+      "closed": false,
+      "currentObservers": null,
+      "hasCompleted": false,
+      "hasError": false,
+      "hasFailed": false,
+      "isStopped": false,
+      "observers": Array [],
+      "requestID": "REQUEST_ROUTE_DOCUMENT_ID",
+      "requestStatus": "IDLE",
+      "thrownError": null,
+    },
+  },
+  "route": Route {
+    "route": Array [],
+    "routeState": "FULLY_SEQUENCED",
+  },
+  "routeId": undefined,
+  "setDriverId": undefined,
+}
+`;

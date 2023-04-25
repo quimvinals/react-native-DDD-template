@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Geocode can be created 1`] = `
+Geocode {
+  "latitude": 2,
+  "longitude": 42,
+}
+`;

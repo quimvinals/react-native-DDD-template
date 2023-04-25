@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`routeFactory can be created 1`] = `
+Route {
+  "route": Array [],
+  "routeState": "FULLY_SEQUENCED",
+}
+`;
