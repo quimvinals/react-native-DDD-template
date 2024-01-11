@@ -76,4 +76,11 @@ export interface IRequestSubject<T> extends BehaviorSubject<T | Status> {
    * Returns the last value the observable has tracked
    */
   readonly currentValue: T | Status;
+
+    /**
+   * @public
+   * Returns true if the request has not finished
+   */
+    readonly isInProgress: boolean;
+
 }

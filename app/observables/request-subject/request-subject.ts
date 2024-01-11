@@ -60,4 +60,8 @@ export class RequestSubject<T> extends BehaviorSubject<T | Status> implements IR
   public get currentValue(): T | Status {
     return super.value;
   }
+
+  public get isInProgress(): boolean {
+    return this.requestStatus === Status.PENDING;
+  }
 }

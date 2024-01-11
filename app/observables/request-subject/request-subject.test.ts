@@ -125,4 +125,19 @@ describe('RequestSubject', function () {
       expect(handleCompletion).toBeCalled();
     });
   });
+
+  describe('get isInProgress', function () {
+    it('returns false if the request is not in progress', function () {
+      instance.startRequest();
+      instance.completeRequest();
+
+      expect(instance.isInProgress).toBeFalsy();
+    });
+
+    it('returns false if the request is not in progress', function () {
+      instance.startRequest();
+
+      expect(instance.isInProgress).toBeTruthy();
+    });
+  });
 });
