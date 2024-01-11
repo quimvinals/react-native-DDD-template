@@ -1,5 +1,5 @@
 {
-  "name": "com.pudos",
+  "name": "react-native-DDD-template",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -22,7 +22,11 @@
     "fullClean": "rm -rf $HOME/.gradle/caches/ && yarn ac && cd .. rm -rf node_modules && yarn install",
     "install:pods": "cd ios && pod-install --quiet",
     "install:deps": "yarn install && yarn install:pods",
-    "parseSchema": "npx openapi-typescript ./app/infrastructure/api/open-api.yml --output ./app/infrastructure/api/schema.ts"
+    "parseSchema": "npx openapi-typescript ./app/infrastructure/api/open-api.yml --output ./app/infrastructure/api/schema.ts",
+    "sourceMap:ios": "react-native bundle --platform ios --dev false --bundle-output ./ios/main.jsbundle  --sourcemap-output ./sourcemap.js --entry-file index.js",
+    "sourceMap:android": "react-native bundle --platform android --dev false --bundle-output ./android/main.jsbundle  --sourcemap-output ./sourcemap.js --entry-file index.js",
+    "followStackTrace": "node followStackTrace.js",
+    "gql:codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
