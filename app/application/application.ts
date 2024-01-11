@@ -62,6 +62,23 @@ export class Application implements IApplication {
     }
   }
 
+  private requestIsInProgress(requestKey: UseCaseRequestID): boolean {
+    return this.useCasesRequests.get(requestKey)?.isInProgress;
+  }
+
+  private executeUseCaseIfIsNotInProgress(
+    requestKey: UseCaseRequestID,
+    fallback: () => IRequestSubject<any>,
+  ): IRequestSubject<any> {
+    if (this.requestIsInProgress(requestKey)) {
+      return this.useCasesRequests.get(requestKey);
+    } else {
+      const subject = fallback();
+      this.useCasesRequests.set(requestKey, subject);
+      return subject;
+    }
+  }
+
   constructor() {
     this.infrastructure = new Infrastructure();
 
@@ -72,13 +89,13 @@ export class Application implements IApplication {
 
     this.useCases = {
       Login: () => {
-        const subject = login(
+        const requestKey: UseCaseRequestID = "Login";
+        const fallback = () => login(
           this.infrastructure,
           this.controllers.DriverController,
           this.controllers.RouteController,
         );
-        this.useCasesRequests.set('Login', subject);
-        return subject;
+        return this.executeUseCaseIfIsNotInProgress(requestKey, fallback);
       },
     };
 
